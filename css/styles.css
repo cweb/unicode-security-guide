@@ -5,13 +5,22 @@ body {
   font-weight:300;
 }
 
-h1, h2, h3, h4, h5, h6 {
+p, h1, h2, h3, h4, h5, h6 {
   color:#222;
   margin:0 0 20px;
 }
 
-p, ul, ol, table, pre, dl {
+ul, ol, table, pre, dl {
   margin:0 0 20px;
+}
+
+p.zero {
+  margin:0;
+  line-height:1.0;
+}
+
+span.uchar {
+  color: firebrick;
 }
 
 h1, h2, h3 {
@@ -82,9 +91,20 @@ table {
   border-collapse:collapse;
 }
 
+thead {
+  background-color: silver;
+  color: black;
+  font-weight: 500;
+}
+
+tr {
+  margin: 1px;
+  line-height: 1em;
+}
+
 th, td {
   text-align:left;
-  padding:5px 10px;
+  padding:2px 2px;
   border-bottom:1px solid #e5e5e5;
 }
 
