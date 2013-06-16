@@ -10,9 +10,19 @@ p, h1, h2, h3, h4, h5, h6 {
   margin:0 0 20px;
 }
 
-ul, ol, table, pre, dl {
+.indent {
+  font-size: 1.2em;
+  border-width: 0 0 0 5px;
+  border-style: solid;
+  border-color: silver;
+  padding: 1em 0em 1em 1em;
+  margin-left: 1em;
+}
+
+ol, table, pre, dl {
   margin:0 0 20px;
 }
+
 
 p.zero {
   margin:0;
