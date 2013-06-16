@@ -62,56 +62,30 @@ A character encoding as defined here means the actual bytes used to represent th
 
 <table>
  <thead><tr>
-  <td>
-  <b><span>UTF
-  Format</span></b>
-  </td>
-  <td>
-  <b><span>Byte
-  sequence</span></b>
-  </td>
+  <td>UTF Format</td>
+  <td>Byte sequence</td>
  </tr>
  </thead>
  <tbody>
  <tr>
-  <td>
-  <b>UTF-8</b>
-  </td>
-  <td>
-  &lt; 41 &gt;
-  </td>
+  <td>UTF-8</td>
+  <td>&lt; 41 &gt;</td>
  </tr>
  <tr>
-  <td>
-  <b>UTF-16 Little Endian</b>
-  </td>
-  <td>
-  &lt; 41 00 &gt;
-  </td>
+  <td>UTF-16 Little Endian</td>
+  <td>&lt; 41 00 &gt;</td>
  </tr>
  <tr>
-  <td>
-  <b>UTF-16 Big Endian</b>
-  </td>
-  <td>
-  &lt; 00 41 &gt;
-  </td>
+  <td>UTF-16 Big Endian</td>
+  <td>&lt; 00 41 &gt;</td>
  </tr>
  <tr>
-  <td>
-  <b>UTF-32 Little Endian</b>
-  </td>
-  <td>
-  &lt; 41 00 00 00 &gt;
-  </td>
+  <td>UTF-32 Little Endian</td>
+  <td>&lt; 41 00 00 00 &gt;</td>
  </tr>
  <tr>
-  <td>
-  <b>UTF-32 Big Endian</b>
-  </td>
-  <td>
-  &lt; 00 00 00 41 &gt;
-  </td>
+  <td>UTF-32 Big Endian</td>
+  <td>&lt; 00 00 00 41 &gt;</td>
  </tr>
 </tbody></table>
 
@@ -119,55 +93,163 @@ The lower ASCII character set is preserved by UTF-8 up through U+007F.  The foll
 
 <table>
  <thead><tr>
-  <td>
-  <p><b><span>UTF
-  Format</span></b></p>
-  </td>
-  <td>
-  <p><b><span>Byte
-  sequence</span></b></p>
-  </td>
+  <td>UTF Format</td>
+  <td>Byte sequence</td>
  </tr>
  </thead>
  <tbody>
  <tr>
-  <td>
-  <p><b>UTF-8</b></p>
-  </td>
-  <td>
-  <p>&lt; EF BB BF &gt;</p>
-  </td>
+  <td>UTF-8</td>
+  <td>&lt; EF BB BF &gt;</td>
  </tr>
  <tr>
-  <td>
-  <p><b>UTF-16 Little Endian</b></p>
-  </td>
-  <td>
-  <p>&lt; FF FE &gt;</p>
-  </td>
+  <td>UTF-16 Little Endian</td>
+  <td>&lt; FF FE &gt;</td>
  </tr>
  <tr>
-  <td>
-  <p><b>UTF-16 Big Endian</b></p>
-  </td>
-  <td>
-  <p>&lt; FE FF &gt;</p>
-  </td>
+  <td>UTF-16 Big Endian</td>
+  <td>&lt; FE FF &gt;</td>
  </tr>
  <tr>
-  <td>
-  <p><b>UTF-32 Little Endian</b></p>
-  </td>
-  <td>
-  <p>&lt; FF FE 00 00 &gt;</p>
-  </td>
+  <td>UTF-32 Little Endian</td>
+  <td>&lt; FF FE 00 00 &gt;</td>
  </tr>
  <tr>
-  <td>
-  <p><b>UTF-32 Big Endian</b></p>
-  </td>
-  <td>
-  <p>&lt; 00 00 FE FF &gt;</p>
-  </td>
+  <td>UTF-32 Big Endian</td>
+  <td> &lt; 00 00 FE FF &gt;</td>
  </tr>
 </tbody></table>
+
+At this point UTF-8 uses three bytes to represent the code point.  One may wonder at this point how a code point greater than U+FFFF would be represented in UTF-16.  The answer lies in surrogate pairs, which use two double-byte sequences together.  Consider the code point <span class="uchar">U+10FFFD PRIVATE USE CHARACTER-10FFFD</span> in the following table.
+
+<table>
+ <thead><tr>
+  <td>UTF Format</td>
+  <td>Byte sequence</td>
+ </tr>
+ </thead>
+ <tbody>
+ <tr>
+  <td>UTF-8</td>
+  <td>&lt; F4 8F BF BD &gt;</td>
+ </tr>
+ <tr>
+  <td>UTF-16 Little Endian</td>
+  <td>&lt; FF DB &gt; &lt; FD DF &gt;</td>
+ </tr>
+ <tr>
+  <td>UTF-16 Big Endian</td>
+  <td>&lt; DB FF &gt; &lt; DF FD &gt;</td>
+ </tr>
+ <tr>
+  <td>UTF-32 Little Endian</td>
+  <td>&lt; FD FF 10 00 &gt;</td>
+ </tr>
+ <tr>
+  <td>UTF-32 Big Endian</td>
+  <td>&lt; 00 10 FF FD &gt;</td>
+ </tr>
+</tbody></table>
+
+Surrogate pairs combine two pairs in the reserved code point range U+D800 to U+DFFF, to be capable of representing all of Unicode’s code points in the 16 bit format.  For this reason, UTF-16 is considered a variable-width encoding just as is UTF-8.  UTF-32 however, is considered a fixed-width encoding.
+
+## Character Escape Sequences and Entity References
+
+An alternative to encoding characters is representing them using a symbolic representation rather than a serialization of bytes.  This is common in HTTP with URL-encoded data, and in HTML.   In HTML, numerical character references (NCR) can be used in either a decimal or hexadecimal form that maps to a Unicode code point. 
+
+In fact, CSS (Cascading Style Sheets) and even Javascript use escape sequences, as do most programming languages.  The details of each protocol’s specification are outside the scope of this document, however examples will be used here for reference.
+
+The following table lists the common escape sequences for <span class="uchar">U+0041 LATIN CAPITAL LETTER A</span>.
+
+<table>
+ <thead><tr>
+  <td>UTF Format</td>
+  <td>Character Reference or Escape Sequence</td>
+ </tr>
+ </thead>
+ <tbody>
+ <tr>
+  <td>URL</td>
+  <td>%41</td>
+ </tr>
+ <tr>
+  <td>NCR (decimal)</td>
+  <td>&amp;#65;</td>
+ </tr>
+ <tr>
+  <td>NCR (Hex)</td>
+  <td>&amp;#x41;</td>
+ </tr>
+ <tr>
+  <td>CSS</td>
+  <td>\41 and \0041</td>
+ </tr>
+ <tr>
+  <td>Javascript</td>
+  <td>\x41 and \u0041</td>
+ </tr>
+ <tr>
+  <td>Other</td>
+  <td>\u0041</td>
+ </tr>
+</tbody></table>
+
+The following table gives another example, using <span class="uchar">U+FEFF ZERO WIDTH NO-BREAK SPACE</span>, also known as the Unicode Byte Order Mark. 
+
+<table>
+ <thead><tr>
+  <td>UTF Format</td>
+  <td>Character  Reference or Escape Sequence</td>
+ </tr>
+ </thead>
+ <tbody>
+ <tr>
+  <td>URL</td>
+  <td>%EF%BB%BF</td>
+ </tr>
+ <tr>
+  <td>NCR (decimal)</td>
+  <td>&amp;#65279;</td>
+ </tr>
+ <tr>
+  <td>NCR (Hex)</td>
+  <td>&amp;#xFEFF;</td>
+ </tr>
+ <tr>
+  <td>CSS</td>
+  <td>&nbsp;\FEFF</td>
+ </tr>
+ <tr>
+  <td>Javascript</td>
+  <td>\xEF\xBB\xBF and \uFEFF</td>
+ </tr>
+ <tr>
+  <td>Other</td>
+  <td>\uFEFF</td>
+ </tr>
+</tbody></table>
+
+## Focus Points for Security Testing
+
+This security testing guide has been split into two general areas to aid readers in setting goals for a software security assessment. Where possible, data has also been provided to assist software engineers in developing more security software. Information such as how framework API's behave by default and when overridden is subject to change at any time.
+
+Clearly, any protocol and standard can be subject to security vulnerabilities, examples include HTML, HTTP, TCP, DNS.  Character encodings and the Unicode standard are also exposed to vulnerability. Sometimes vulnerabilities are related to a design-flaw in the standard, but more often they’re related to implementation in practice. Many of the phenomena discussed here are not vulnerabilities in the standard. Instead, the following categories can enable vulnerability in applications which are not built to anticipate and prevent the relevant attacks:
+
+* Visual Spoofing
+* Best-fit mappings
+* Charset transcodings and character mappings
+* Normalization
+* Canonicalization of overlong UTF-8
+* Over-consumption
+* Character substitution
+* Character deletion
+* Casing
+* Buffer overflows
+* Controlling Syntax
+* Charset mismatches
+
+Consider the following image as an example.  In the case of <span class="uchar">U+017F LATIN SMALL LETTER LONG S</span>, the upper casing and normalization operations transform the character into a completely different value.  Many characters such as this one have explicit mappings defined through the Unicode Standard, indicating what character (or sequences of characters) they should transform to through casing and normalization.  Normalization is a defined process discussed later in this document.  In some situations, this behavior could be exploited to create cross-site scripting or other attack scenarios.
+
+The rest of this guide intends to explore each of these phenomena in more detail, as each relates to software vulnerability mitigation and testing.
+
+
