@@ -1,3 +1,4 @@
+
 body {
   padding:50px;
   font:14px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -99,7 +100,7 @@ header {
   position:fixed;
 }
 
-footer, header ul {
+header ul {
   list-style:none;
   height:40px;
   
@@ -119,14 +120,14 @@ footer, header ul {
   width:270px;
 }
 
-footer, header li {
+header li {
   width:89px;
   float:left;
   border-right:1px solid #d2d2d2;
   height:40px;
 }
 
-footer, header ul a {
+header ul a {
   line-height:1;
   font-size:11px;
   color:#999;
@@ -141,17 +142,17 @@ strong {
   font-weight:700;
 }
 
-footer, header ul li + li {
+header ul li + li {
   width:88px;
   border-left:1px solid #fff;
 }
 
-footer, header ul li + li + li {
+header ul li + li + li {
   border-right:none;
   width:89px;
 }
 
-footer, header ul a strong {
+header ul a strong {
   font-size:14px;
   display:block;
   color:#222;
