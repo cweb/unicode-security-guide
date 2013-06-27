@@ -1,7 +1,6 @@
 ---
 layout: docs
 title: Background
-permalink: /docs/background/
 ---
 
 ### Background page

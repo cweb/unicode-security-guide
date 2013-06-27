@@ -2,7 +2,7 @@
 layout: docs
 title: Test2
 next_section: main
-permalink: test2
+permalink: foo/bar
 ---
 
 ### test2 again page
