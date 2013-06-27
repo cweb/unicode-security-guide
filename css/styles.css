@@ -1,4 +1,3 @@
-
 body {
   padding:50px;
   font:14px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -100,34 +99,23 @@ header {
   position:fixed;
 }
 
-footer ul {
+header ul {
   list-style:none;
   height:40px;
   
   padding:0;
   
-  background: #eee;
-  background: -moz-linear-gradient(top, #f8f8f8 0%, #dddddd 100%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f8f8f8), color-stop(100%,#dddddd));
-  background: -webkit-linear-gradient(top, #f8f8f8 0%,#dddddd 100%);
-  background: -o-linear-gradient(top, #f8f8f8 0%,#dddddd 100%);
-  background: -ms-linear-gradient(top, #f8f8f8 0%,#dddddd 100%);
-  background: linear-gradient(top, #f8f8f8 0%,#dddddd 100%);
-  
-  border-radius:5px;
-  border:1px solid #d2d2d2;
-  box-shadow:inset #fff 0 1px 0, inset rgba(0,0,0,0.03) 0 -1px 0;
   width:270px;
 }
 
-footer li {
+header li {
   width:89px;
   float:left;
   border-right:1px solid #d2d2d2;
   height:40px;
 }
 
-footer ul a {
+header ul a {
   line-height:1;
   font-size:11px;
   color:#999;
@@ -142,17 +130,17 @@ strong {
   font-weight:700;
 }
 
-footer ul li + li {
+header ul li + li {
   width:88px;
   border-left:1px solid #fff;
 }
 
-footer ul li + li + li {
+header ul li + li + li {
   border-right:none;
   width:89px;
 }
 
-footer ul a strong {
+header ul a strong {
   font-size:14px;
   display:block;
   color:#222;
@@ -182,6 +170,26 @@ footer {
   bottom:50px;
 }
 
+footer ul {
+  list-style:none;
+  height:40px;
+  
+  padding:0;
+  
+  background: #eee;
+  background: -moz-linear-gradient(top, #f8f8f8 0%, #dddddd 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f8f8f8), color-stop(100%,#dddddd));
+  background: -webkit-linear-gradient(top, #f8f8f8 0%,#dddddd 100%);
+  background: -o-linear-gradient(top, #f8f8f8 0%,#dddddd 100%);
+  background: -ms-linear-gradient(top, #f8f8f8 0%,#dddddd 100%);
+  background: linear-gradient(top, #f8f8f8 0%,#dddddd 100%);
+  
+  border-radius:5px;
+  border:1px solid #d2d2d2;
+  box-shadow:inset #fff 0 1px 0, inset rgba(0,0,0,0.03) 0 -1px 0;
+  width:270px;
+}
+
 @media print, screen and (max-width: 960px) {
   
   div.wrapper {
@@ -195,7 +203,7 @@ footer {
     width:auto;
   }
   
-  footer {
+  header {
     padding-right:320px;
   }
   
@@ -206,11 +214,11 @@ footer {
     margin:0 0 20px;
   }
   
-  footer a small {
+  header a small {
     display:inline;
   }
   
-  footer ul {
+  header ul {
     position:absolute;
     right:50px;
     top:52px;
@@ -222,11 +230,11 @@ footer {
     word-wrap:break-word;
   }
   
-  footer {
+  header {
     padding:0;
   }
   
-  footer ul, footer p.view {
+  header ul, header p.view {
     position:static;
   }
   
@@ -240,7 +248,7 @@ footer {
     padding:15px;
   }
   
-  footer ul {
+  header ul {
     display:none;
   }
 }
@@ -252,3 +260,5 @@ footer {
     color:#444;
   }
 }
+
+
