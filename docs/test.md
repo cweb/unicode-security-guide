@@ -1,7 +1,6 @@
 ---
 layout: docs
 title: Main
-permalink: docs/test/
 ---
 
 ### test page

@@ -1,6 +1,7 @@
 ---
 layout: docs
 title: Test2
+next_section: main
 permalink: test2
 ---
 
