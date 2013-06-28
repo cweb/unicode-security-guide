@@ -1,4 +1,5 @@
 url: http://websec.github.io/unicode-security-guide
+foo: http://localhost:4000
 baseurl: /unicode-security-guide
 author: "Chris Weber"
 markdown: rdiscount
