@@ -12,9 +12,25 @@ This section attempts to explore the various ways in which characters and string
 As an example, consider an attacker trying to inject script (i.e. cross-site scripting, or XSS attack) into a Web-application which utilizes a defensive input filter.  The attacker finds that the application performs a lowercase operation on the input after filtering, and by injecting special characters they can exploit that behavior.   That is, the string "script" is prevented by the filter, but the string "scr&#x0130;pt" is allowed.
 
 ## Table of Contents 
-* [Prior Research](#prior) 
-* [Attack Scenarios](#attack)
-* [Defensive Options](#defense) 
+* [Round Trip](#round-trip) 
+* [Best Fit Mappings](#best-fit)
+* [Charset Transcoding and Character Mappings](#transcoding) 
+* [Normalization](#normalization)
+* [Canonicalization of Non-Shortest Form UTF-8](#canonicalization)
+* [Over-Consumption](#overconsumption)
+  * [Well-formed and Ill-formed Byte Sequences](#formedness)
+  * [Handling Ill-formed Byte Sequences](#handling)
+* [Handling the Unexpected](#unexpected)
+  * [Unexpected Inputs](#unexpected-inputs)
+  * [Character Substitution](#unexpected-substitution)
+  * [Character Deletion](#unexpected-deletion)
+* [Upper and Lower Casing](#casing)
+* [Buffer Overflows](#overflows)
+  * [Upper and Lower Casing](#overflow-casing)
+  * [Normalization](#overflow-normalization)
+* [Controlling Syntax](#syntax)
+* [Charset Mismatch](#charset)
+
 
 ## <a id="round-trip"></a>Round-trip Conversions: A Common Pattern
 In practice, Globalized software must be capable of handling many different character sets, and converting data between them. The process for supporting this requirement can generally look like the following:
@@ -915,11 +931,263 @@ The Unicode BOM is recommend input for most software test cases, and can be espe
 Handle error conditions securely by replacing with the Unicode <span class="uchar">REPACEMENT CHARACTER U+FFFD</span>. If that's impractical for some reason then choose a safe replacement that doesn't have syntactical meaning in the protocol being used. Some common examples include ? and #.
 
 ## <a id="casing"></a>Upper and Lower Casing
+Strings are transformed through upper and lower casing operations, and sometimes in ways that weren't intended.  This behavior can be exploited if performed at the wrong time.  For example, if a casing operation is performed anywhere in the stack after a security check, then a special character like <span class="uchar">U+0130 LATIN CAPITAL LETTER I WITH DOT ABOVE</span> could be used to bypass a cross-site scripting filter.
+
+<span class="indent">toLower("&#x0130") == "i"</span>
+
+Another aspect of casing operations is that the length of characters and strings can change, depending on the input.  The following should never be assumed:
+
+<span class="indent">toLower("scr&#x0130pt") == "script"</span>
+
+Another aspect of casing operations is that the length of characters and strings can change, depending on the input.  The following should never be assumed:
+
+<span class="indent">len(x) != len(toLower(x))</span>
+
+Common frameworks handle string comparison in different ways.  The following table captures the behavior of classes intended for case-sensitive and case-insensitive string comparison.
+
+<table>
+ <thead><tr>
+  <td>Library</td>
+  <td>API</td>
+  <td>Is Dangerous </td>
+  <td>Can override </td>
+  <td>Notes</td>
+ </tr>
+ </thead>
+ <tbody>
+ <tr>
+  <td>.NET 1.0</td>
+  <td>StringComparer</td>
+  <td></td>
+  <td></td>
+  <td></td>
+ </tr>
+ <tr>
+  <td>.NET 2.0</td>
+  <td>StringComparer</td>
+  <td></td>
+  <td></td>
+  <td></td>
+ </tr>
+ <tr>
+  <td>.NET 3.0</td>
+  <td>StringComparer</td>
+  <td></td>
+  <td></td>
+  <td></td>
+ </tr>
+ <tr>
+  <td>Win32</td>
+  <td>CompareStringOrdinal</td>
+  <td></td>
+  <td></td>
+  <td></td>
+ </tr>
+ <tr>
+  <td>Win32</td>
+  <td><a href="http://msdn.microsoft.com/en-us/library/ms647489(VS.85).aspx">lstrcmpi</a></td>
+  <td></td>
+  <td></td>
+  <td></td>
+ </tr>
+ <tr>
+  <td>Win32</td>
+  <td>CompareStringEx</td>
+  <td></td>
+  <td></td>
+  <td></td>
+ </tr>
+ <tr>
+  <td>ICU C</td>
+  <td>ucol_strcoll</td>
+  <td></td>
+  <td></td>
+  <td></td>
+ </tr>
+ <tr>
+  <td>ICU C</td>
+  <td>ucol_strcollIter</td>
+  <td></td>
+  <td>Allows for comparing two strings that are supplied as character
+  iterators (UCharIterator). This is useful when you need to compare
+  differently encoded strings using strcoll</td>
+  <td></td>
+ </tr>
+ <tr>
+  <td>ICU C++</td>
+  <td>Collator::Compare</td>
+  <td></td>
+  <td></td>
+  <td></td>
+ </tr>
+ <tr>
+  <td>ICU C</td>
+  <td>u_strCaseCompare</td>
+  <td></td>
+  <td>Compare two strings case-insensitively using full case folding.</td>
+  <td></td>
+ </tr>
+ <tr>
+  <td>ICU C</td>
+  <td>u_strcasecmp</td>
+  <td></td>
+  <td>Compare two strings case-insensitively using full
+  case folding.</td>
+  <td></td>
+ </tr>
+ <tr>
+  <td>ICU C</td>
+  <td>u_strncasecmp</td>
+  <td></td>
+  <td>Compare two strings case-insensitively using full case folding.</td>
+  <td></td>
+ </tr>
+ <tr>
+  <td>ICU Java</td>
+  <td>caseCompare</td>
+  <td></td>
+  <td>Compare two strings case-insensitively using full
+  case folding.</td>
+  <td></td>
+ </tr>
+ <tr>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+ </tr>
+ <tr>
+  <td>ICU Java</td>
+  <td>Collator.compare</td>
+  <td></td>
+  <td></td>
+  <td></td>
+ </tr>
+ <tr>
+  <td>POSIX</td>
+  <td>strcoll</td>
+  <td></td>
+  <td></td>
+  <td></td>
+ </tr>
+</tbody></table>
+
+
 
 ## <a id="overflows"></a>Buffer Overflows
+Buffer overflows can occur through improper assumptions about characters versus bytes, and also about string sizes after casing and normalization operations.
+
 ### <a id="overflow-casing"></a>Upper and Lower Casing
+The following table from UTR 36 illustrates the maximum expansion factors for casing operations on the edge-case characters in Unicode.  These inputs make excellent test cases.
+
+<table>
+ <thead><tr>
+  <td>Operation </td>
+  <td>UTF </td>
+  <td>Factor </td>
+  <td>Sample </td>
+ </tr>
+ </thead>
+ <tbody>
+ <tr>
+  <td>Lower </td>
+  <td>8</td>
+  <td>1.5</td>
+  <td>&#x023A;</td>
+  <td>U+023A</td>
+ </tr>
+ <tr>
+  <td>16, 32</td>
+  <td>1</td>
+  <td>A</td>
+  <td>U+0041</td>
+ </tr>
+ <tr>
+  <td>Upper </td>
+  <td>8, 16, 32 </td>
+  <td>3 </td>
+  <td>&#x0390;</td>
+  <td>U+0390</td>
+ </tr>
+</tbody></table>
+
+<sup>[source:  Unicode Technical Report #36](http://www.unicode.org/reports/tr36/)</sup>
+
 ### <a id="overflow-normalization"></a>Normalization
+
+The following table from UTR 36 illustrates the maximum expansion factors for normalization operations on the edge case characters in Unicode.  These inputs make excellent test cases.
+
+<table>
+ <thead><tr>
+  <td>Operation </td>
+  <td>UTF </td>
+  <td>Factor </td>
+  <td>Sample </td>
+ </tr>
+ </thead>
+ <tbody>
+ <tr>
+  <td>NFC</td>
+  <td>8</td>
+  <td>3X</td>
+  <td>&#x1D160;</td>
+  <td>U+1D160</td>
+ </tr>
+ <tr>
+  <td>16, 32</td>
+  <td>3X</td>
+  <td>&#xFB2C;</td>
+  <td>U+FB2C</td>
+ </tr>
+ <tr>
+  <td>NFD</td>
+  <td>8</td>
+  <td>3X</td>
+  <td>&#x0390;</td>
+  <td>U+0390</td>
+ </tr>
+ <tr>
+  <td>16, 32</td>
+  <td>4X</td>
+  <td>&#x1F82;</td>
+  <td>U+1F82</td>
+ </tr>
+ <tr>
+  <td>NFKC/NFKD</td>
+  <td>8</td>
+  <td>11X</td>
+  <td>&#xFDFA;</td>
+  <td>U+FDFA</td>
+ </tr>
+ <tr>
+  <td>16, 32</td>
+  <td>18X</td>
+ </tr>
+</tbody></table>
+<sup>[source:  Unicode Technical Report #36](http://www.unicode.org/reports/tr36/)</sup>
+
+
 
 ## <a id="syntax"></a>Controlling Syntax
 
+White space and line feeds affect syntax in parsers such as HTML, XML and javascript.  By interpreting characters such as the 'Ogham space mark' and 'Mongolian vowel separator' as whitespace software can allow attacks through the system.  This could give attackers control over the parser, and enable attacks that might bypass security filters.  Several characters in Unicode are assigned the 'white space' category and also the 'white space' binary property.  Depending on how software is designed, these characters may literally be treated as a space character U+0020.
+
+For example, the following illustration shows the special white space properties associated with the <span class="uchar">U+180E MONGOLIAN VOWEL SEPARATOR</span> character.
+
+TODO: add image
+
+If a Web browser interprets this character as white space U+0020, then the following HTML fragment would execute script:
+
+<span class="indent">&lt;a href=#[U+180E]onclick=alert()&gt;</span>
+
+
 ## <a id="charset"></a>Charset Mismatch
+
+When software cannot accurately determine the character set of the text it is dealing with, then it must decide to either error or make an assumption.  User-agents most commonly must deal with this problem, as they’re faced with interpreting data from a large assortment of character sets.  There are no standards that define how to handle situations of character set mismatch, and vendor implementations vary greatly.
+
+ Consider the following diagram, in which a Web browser receives an HTTP response with an HTTP charset of ISO-8859-1 defined, and a meta tag charset of shift_jis defined in the HTML.
+
+TODO add image
+
+When an attacker can exploit can control charset declarations, they can control the software’s behavior and in some cases setup an attack.
