@@ -52,13 +52,13 @@ A discussion of characters and strings can quickly dissolve into a soup of termi
 To put it simply, an encoding is the binary representation of some character.  It’s ‘bits on the wire’ or ‘data at rest’ in some encoding scheme.  The Unicode Consortium has defined four character encoding forms, the Unicode Transformation Formats (UTF):
 
 1. UTF-7
-   Defined by RFC 2152.
+   Defined by RFC 2152, and has since been largely deprecated and its use is not recommended. 
 1. UTF-8
-   Each Unicode code point is assigned to an unsigned byte sequence of one to four bytes in length.
+   A __variable-width encoding__ where each Unicode code point is assigned to an unsigned byte sequence of __1 to 4__ bytes in length.  Older versions of the specification allowed for up to __6 bytes__ in length but that is no longer the case.
 1. UTF-16
-   Each Unicode code point is assigned to an unsigned sequence of 16 bits.  There are exceptions to this rule, see the discussion of surrogate pairs below.
+   A __variable-width encoding__ where each Unicode code point is assigned to an unsigned sequence of __2 or 4__ bytes.  The 2-byte sequences are comprised of __surrogate pairs__.
 1. UTF-32
-   Each Unicode code point is assigned to an unsigned sequence of 32 bits with the same numeric value as the code point.
+   A __fixed-width encoding__ where each Unicode code point is assigned to an unsigned sequence of __4 bytes__.  UTF-32 employs a fixed mapping using the same numeric value as the code point, so no algorithms are needed.
 
 Of these four, UTF-7 has been deprecated, UTF-8 is the most commonly used on the Web, and both UTF-16 and UTF-32 can be serialized in little or big endian format.
 
@@ -224,12 +224,20 @@ The following table gives another example, using <span class="uchar">U+FEFF ZERO
   <td>&nbsp;\FEFF</td>
  </tr>
  <tr>
-  <td>Javascript</td>
-  <td>\xEF\xBB\xBF and \uFEFF</td>
+  <td>Javascript (as bytes)</td>
+  <td>\xEF\xBB\xBF</td>
  </tr>
  <tr>
-  <td>Other</td>
+  <td>Javascript (as reference)</td>
   <td>\uFEFF</td>
+ </tr>
+ <tr>
+  <td>JSON</td>
+  <td>\uFEFF</td>
+ </tr>
+ <tr>
+  <td>Microsoft Internet Information Server (IIS)</td>
+  <td>%uFEFF</td>
  </tr>
 </tbody></table>
 
