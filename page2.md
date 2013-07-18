@@ -32,7 +32,7 @@ A variety of scenarios exist where visual spoofing may be used to attack and exp
 
 ### <a id="domains"></a>Spoofing Domain Names
 
-<img class="center" src="{{ site.url }}/img/spoof-google.png" />
+<img class="center" style="max-width: 80%;" src="{{ site.url }}/img/spoof-google.png" />
 <img class="center" src="{{ site.url }}/img/spoof-mozilla.png" />
 <img class="center" src="{{ site.url }}/img/spoof-slash.png" />
 
@@ -54,7 +54,7 @@ Security decisions are often presented to end users in the form of dialog boxes 
 
 In any of these cases, a clever attack may use special BIDI or other characters that reverse the direction of text, or otherwise manipulate the text in a way that may confuse or fool the end users.
 
-<img class="center" src="{{ site.url }}/img/spoof-win-explorer-file.png" />
+<img class="center" style="max-width:80%;" src="{{ site.url }}/img/spoof-win-explorer-file.png" />
 <img class="center" src="{{ site.url }}/img/spoof-win-explorer-folder.png" />
 
 ### <a id="ads"></a>Malvertisements

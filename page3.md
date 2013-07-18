@@ -375,11 +375,11 @@ Normalization forms defined:
 
 When testing for security vulnerabilities, we're often most interested in the <strong>compatibility decomposition forms (NFKC, NFKD)</strong>, but occassionally the canonical decomposition forms will produce interesting transformations as well. Cases where characters, and sequences of characters, transform into something different than the original source, might be used to bypass filters or produce other exploits.  Consider the following image, which depicts the result of normalizing with either NFKC or NFKD for the character <span class="uchar">U+FE64 SMALL LESS-THAN SIGN</span>.
 
-<img class="center" src="{{ site.url }}/img/normalization-nfkc-nfkd-003C.png" />
+<img class="center" style="max-width: 50%;" src="{{ site.url }}/img/normalization-nfkc-nfkd-003C.png" />
 
 In the above example, the character U+FE64 will transform into U+003C, which might lead to security vulnerability in HTML applications. Consider the next example which shows the result of either NFD or NFKD decomposition applied to the "Turkish I" character <span class="uchar">U+0130 LATIN CAPITAL LETTER I WITH DOT ABOVE</span>.
 
-<img class="center" src="{{ site.url }}/img/normalization-turkish-i.png" />
+<img class="center" style="max-width: 60%;" src="{{ site.url }}/img/normalization-turkish-i.png" />
 
 As a software engineer, it becomes evident that Unicode normalization plays an important role, and that it is not always an explicit choice.  Often times normalization is applied implicitly by the underlying framework, platform, or Web browser.  It's important to understand the API's being used directly, and in some cases indirectly (by other processing on the stack). 
 
