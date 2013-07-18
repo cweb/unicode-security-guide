@@ -52,7 +52,7 @@ The "best-fit" phenomena occurs when a character X gets transformed to an entire
 
 * A framework API transforms input to a different character encoding by default.
 * Data is marshalled from a wide string type (multi-byte character representation) such as UTF-16, to a non-wide string (single-byte character representation) such as US-ASCII. 
-* Character X in the source encoding doesn't exist in the destination encoding, so the software attempts to find a best match.
+* Character X in the source encoding doesn't exist in the destination encoding, so the software attempts to find a 'best-fit' match.
 
 In general, best-fit mappings occur when characters are transcoded between Unicode and another encoding.  It's often the case that the source encoding is Unicode and the destination is another charset such as shift_jis, however, it could happen in reverse as well. Best-fit mappings are different than character set transcoding which is discussed in another section of this guide.
 
@@ -365,7 +365,7 @@ Software vulnerabilities can arise through charset transcodings. To name a few:
 
 ## <a id="normalization"></a>Normalization
 
-In Unicode, Normalization of characters and strings follows a standardized process defined in the <a href="http://unicode.org/reports/tr15/">Unicode Standard Annex #15: Unicode Normalization Forms</a>.  The details of Normalization are not for the feignt of heart and will not be heavily discussed here. For engineers and testers, it's at least important to understand that there are four
+In Unicode, Normalization of characters and strings follows a specification defined in the <a href="http://unicode.org/reports/tr15/">Unicode Standard Annex #15: Unicode Normalization Forms</a>.  The details of Normalization are not for the faint of heart and will not be discussed in this guide. For engineers and testers, it's at least important to understand that there are four
 Normalization forms defined: 
 
 * NFC - Canonical Decomposition
@@ -373,9 +373,18 @@ Normalization forms defined:
 * NFKC - Compatibility Decomposition
 * NFKD - Compatibility Decomposition,followed by Canonical Composition
 
-In testing for security vulnerabilities, we're most interested in the <strong>compatibility decomposition forms (NFKC, NFKD)</strong>. These are forms NFKC and NFKD which transform characters to their compatibility equivalents.
+When testing for security vulnerabilities, we're often most interested in the <strong>compatibility decomposition forms (NFKC, NFKD)</strong>, but occassionally the canonical decomposition forms will produce interesting transformations as well. Cases where characters, and sequences of characters, transform into something different than the original source, might be used to bypass filters or produce other exploits.  Consider the following image, which depicts the result of normalizing with either NFKC or NFKD for the character <span class="uchar">U+FE64 SMALL LESS-THAN SIGN</span>.
 
-Again, it becomes important to understand the API's being used directly, and in some cases indirectly (by other processing on the stack). The following table of common library API's lists known behaviors:
+<img class="center" src="{{ site.url }}/img/normalization-nfkc-nfkd-003C.png" />
+
+In the above example, the character U+FE64 will transform into U+003C, which might lead to security vulnerability in HTML applications. Consider the next example which shows the result of either NFD or NFKD decomposition applied to the "Turkish I" character <span class="uchar">U+0130 LATIN CAPITAL LETTER I WITH DOT ABOVE</span>.
+
+<img class="center" src="{{ site.url }}/img/normalization-turkish-i.png" />
+
+As a software engineer, it becomes evident that Unicode normalization plays an important role, and that it is not always an explicit choice.  Often times normalization is applied implicitly by the underlying framework, platform, or Web browser.  It's important to understand the API's being used directly, and in some cases indirectly (by other processing on the stack). 
+
+### <a id="normalization-apis"></a>Normalization Defaults in Common Libraries
+The following table of common library API's lists known behaviors:
 
 <table>
  <thead><tr>
@@ -415,8 +424,78 @@ Again, it becomes important to understand the API's being used directly, and in 
   <td></td>
   <td></td>
  </tr>
+ <tr>
+  <td>Ruby</td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+ </tr>
+ <tr>
+  <td>Python</td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+ </tr>
+ <tr>
+  <td>PHP</td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+ </tr>
+ <tr>
+  <td>Perl</td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+ </tr>
 </tbody></table>
 
+### <a id="normalization-browsers"></a>Normalization in Web Browser URLs
+The following table captures how Web browsers normalize URLs.  Differences in normalization and character transformations can lead to incompatibility as well as security vulnerability.
+<span class="superscript"><a href="http://web.lookout.net/2012/03/unicode-normalization-in-urls.html">source</a></span>
+
+<table>
+ <thead><tr>
+  <td>Description</td>
+  <td>MSIE 9</td>
+  <td>FF 5.0</td>
+  <td>Chrome 12</td>
+  <td>Safari 5</td>
+  <td>Opera 11.5</td>
+ </tr>
+ </thead>
+ <tbody>
+ <tr>
+  <td>Applies normalization in the path</td>
+  <td class="green">No</td>
+  <td class="green">No</td>
+  <td class="green">No</td>
+  <td class="red">Yes - NFC</td>
+  <td class="green">No</td>
+ </tr>
+ <tr>
+  <td>Applies normalization in the query</td>
+  <td class="green">No</td>
+  <td class="green">No</td>
+  <td class="green">No</td>
+  <td class="red">Yes - NFC</td>
+  <td class="green">No</td>
+ </tr>
+ <tr>
+  <td>Applies normalization in the fragment</td>
+  <td class="green">No</td>
+  <td class="green">No</td>
+  <td class="red">Yes - NFC</td>
+  <td class="red">Yes - NFC</td>
+  <td class="green">No</td>
+ </tr>
+</tbody></table>
+
+### <a id="normalization-test"></a>Normalization Test Cases
 The following table lists test cases to run from a black-box, external perspective. By interpreting the output/rendered data, a tester can determine if a normalization transformation may be happening.
 
 <table>

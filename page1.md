@@ -36,6 +36,8 @@ A code point is a 21-bit scalar value in the current version of Unicode, and is 
 
 The valid range for Unicode code points is currently U+0000 to U+10FFFF.  This range can be expanded in the future if the Unicode Standard changes. The following image illustrates some of the properties or metadata that accompany a given code point.
 
+<img class="center" src="{{ site.url }}/img/uchar-A.png" />
+
 Code point U+0041 represents the Latin Capital Letter A. It's no coincidence that this maps directly to ASCII's value 0x41, as the Unicode Standard has always preserved the lower ASCII range to ensure widespread compatibility. Some interesting things to note here are the properties associated with this code point:
 
 * Several categories are assigned including a general 'category' and a 'script' family.

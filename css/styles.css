@@ -19,6 +19,20 @@ p, h1, h2, h3, h4, h5, h6 {
   margin-left: 1em;
 }
 
+.superscript {
+  position: relative;
+  top: -0.5em;
+  font-size: 80%;
+}
+
+.red {
+  color: red;
+}
+
+.green {
+  color: green;
+}
+
 ol, table, pre, dl {
   margin:0 0 20px;
 }
@@ -129,6 +143,13 @@ th {
 
 img {
   max-width:100%;
+}
+
+img.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width:75%;
 }
 
 header {
