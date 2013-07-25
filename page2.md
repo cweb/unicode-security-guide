@@ -26,19 +26,96 @@ One of the most well-known attacks to exploit visual spoofing was the Paypal.com
 
 Viktor Krammer, author of the [Quero Toolbar](http://www.quero.at/) for Internet Explorer, also presented additional research on these attack vectors and detection mechanisms in his [2006 presentation](http://www.quero.at/papers/idn_spoofing.pdf).  Additionally, the [Unicode Consortium](http://unicode.org) has been active at raising awareness of these issues in its security papers, and in providing recommended solutions.
 
+## <a id="vectors"></a>Summary of Vectors
+The phenomena of 'visual spoofing' may be malicious and deliberate or benign and accidental.  There have been cases where a choice of font displayed a sequence of characters in an unintended way, just as there have been cases where Unicode characters did not display properly.  The following list attempts to capture the major vectors:
+
+__Non-Unicode lookalikes__
+
+Simple characters or character combinations can look like something else.  For example, the letters "r" and "n" together can look like the letter "m".  E.g. <span class="spoof">"rn"</span>.  Also, the number <span class="spoof">"0"</span> can look like the letter <span class="spoof">"O"</span>, the number <span class="spoof">"1"</span> can look like the letter <span class="spoof">"l"</span>, and so on.
+
+__Unicode Confusables__
+
+The Unicode Confusables are discussed in detail later in this document.  In short, these are the diverse array of non-ASCII Unicode characters which are easily confused with characters across languages.
+
+__ The Invisibles__
+
+Discussed later in this document, these are characters which have no visual appearance and minimal spacing if any spacing at all.  Hence, they are visually non-existant.  
+
+__Problematic font-rendering__
+
+Fonts are ultimately responsible for the visual display of characters, and can sometimes render glyphs confusingly, or as empty white space.  There are numerous examples of this, just one of which is described below:
+
+<table>
+<thead>
+ <tr>
+   <td>Character sequence</td>
+   <td>Should appear as</td>
+   <td>Might appear as</td>
+ </tr>
+</thead>
+<tbody>
+ <tr>
+   <td>U+00B7 U+0041 U+0338</td>
+   <td><span class="uchar">A&#x0338;</span></td> 
+   <td><span class="uchar">A/</span></td>
+ </tr>
+</tbody>
+</table>
+
+__Manipulating combining-marks__
+
+Combining marks can be stacked or re-ordered in a myriad of ways.  Consider the following table which illustrates just one way that combining marks can be stacked (using one directly after another). The table also shows an example of how combining marks can be re-ordered in a different sequence, but still have the same visual appearance.
+
+<table>
+<thead>
+ <tr>
+   <td>Character sequence</td>
+   <td>Appears as</td>
+ </tr>
+</thead>
+<tbody>
+ <tr>
+   <td>U+006F U+0304</td>
+   <td><span class="uchar">o&#x0304;</span></td> 
+ </tr>
+ <tr>
+   <td>U+006F U+0304 U+0304</td>
+   <td><span class="uchar">o&#x0304;&#x0304;</span></td> 
+ </tr>
+ <tr>
+   <td>U+006F U+0336 U+0335</td>
+   <td><span class="uchar">o&#x0336;&#x0335;</span></td> 
+ </tr>
+ <tr>
+   <td>U+006F U+0335 U+0336</td>
+   <td><span class="uchar">o&#x0335;&#x0336;</span></td> 
+ </tr>
+</tbody>
+</table>
+
+__Bidi and syntax spoofing__
+
+
 ## <a id="attack"></a>Attack Scenarios 
 
 A variety of scenarios exist where visual spoofing may be used to attack and exploit people.  This section looks at a few.
 
 ### <a id="domains"></a>Spoofing Domain Names
+Domain names represent an interesting attack vector because their mere visual appearance inspires trust in a brand.  The following image represents what visually appear as two identical domain names, however, the second contains the <span class="uchar">U+0261 LATIN SMALL LETTER SCRIPT G</span>.
 
-<img class="center" style="max-width: 80%;" src="{{ site.url }}/img/spoof-google.png" />
+<img class="center" src="{{ site.url }}/img/spoof-google.png" />
+
+The tricky part about presenting domain names is that they often get simply a glance, if any look at all.  The following image represents two domain names which might be visually similar 'enough' to fool someone, yet not identical.
+
 <img class="center" src="{{ site.url }}/img/spoof-mozilla.png" />
+
+Finally, characters that appear to be syntactic elements, such as <span class="uchar">U+FF89 HALFWIDTH KATAKANA LETTER NO</span> which resembles the forward-slash path-separator, can be troublesome.  In the following image, this character is used in the subdomain label of a domain name, but appears to be a path-separator.
+
 <img class="center" src="{{ site.url }}/img/spoof-slash.png" />
 
 ### <a id="vanity"></a>Fradulent Vanity URL's
 
-A social networking service wants to allow vanity URL’s to be registered using international characters such as <span class="uchar">www.foo.bar/&#x0444;&#x0443;</span> but perceives too great a risk from the variety of ways that the URL could be subject to visual fraud and confusion. Because Unicode characters are well-supported in the path portion of a browser’s URL display, a well-crafted vanity URL could easily fool victims and be the landing page for a phishing attack.
+A social networking service wants to allow vanity URL’s to be registered using international characters such as <span class="uchar">www.foo.bar/&#x0444;&#x0443;</span> but perceives too great a risk from the variety of ways that the URL could be subject to visual fraud and confusion. Because Unicode characters are well-supported in the path portion of a browser’s URL display, a well-crafted vanity URL could easily fool victims and be the landing page for a phishing attack.  In fact, it's often unnecessary to use Unicode - in some cases, the number one "1" can appear as the letter "l", and in certain fonts the sequence "rn" can appear as the letter "m".
 
 ### <a id="profanity"></a>Bypassing Profanity Filters
 
@@ -54,8 +131,15 @@ Security decisions are often presented to end users in the form of dialog boxes 
 
 In any of these cases, a clever attack may use special BIDI or other characters that reverse the direction of text, or otherwise manipulate the text in a way that may confuse or fool the end users.
 
-<img class="center" style="max-width:80%;" src="{{ site.url }}/img/spoof-win-explorer-file.png" />
+Consider the following image which shows the Windows Explorer program.  What appears to be a plain text file ending in the ".txt" file extension, is actually an executable file ending in the ".exe" extension.  Fortunately, Windows Explorer recognizes the true file type, which it has listed as "Application".
+
+<img class="center" src="{{ site.url }}/img/spoof-win-explorer-file.png" />
+
+In another example, the <span class="uchar">U+FEFF ZERO WIDTH NO-BREAK SPACE</span> character, also known as the Byte-Order Mark, or BOM, acts as an 'invisible' character.
+
 <img class="center" src="{{ site.url }}/img/spoof-win-explorer-folder.png" />
+
+Invisible characters present their own interesting dymanics and applications.  As seen in the image above, Windows Explorer presents what appears to be two folders with identical names, whereas a default command prompt does not properly display the BOM, and so presents it as an empty box.
 
 ### <a id="ads"></a>Malvertisements
 
@@ -66,6 +150,7 @@ Advertising network's often need to protect brand name trademarks from being reg
 Email addresses and the SMTP protocol has long been confined to ASCII, however, standards work through the <a href="http://www.ietf.org">IETF</a> was concluded in 2013 by the <a href="http://datatracker.ietf.org/wg/eai/charter/">Email Address Internationalization Working Group</a>.  The EAI effort delivered documentation for integrating UTF-8 into the core email protocols, as well as advice to EAI deployment in client and server software.  In preparing for the transition, email client engineers and designers will need to anticipate and handle the case of visually identical email addresses, among other issues.  If left unhandled, then end users could easily be fooled. Digital certificates would provide a good mechanism for proving authenticity of a message; however such certificates also support Unicode and are vulnerable to the exact same attacks.
 
 ## <a id="defense"></a>Defensive Options
+All does not seem lost.  While
 
 ## <a id="confusables"></a>The Confusables
 Throughout Unicode, the characters that visually resemble one another are referred to as <strong>the confusables</strong>.  The Unicode Consortium has documented this phenomena in both <a href="http://www.unicode.org/reports/tr36/">Technical Report 36</a> and <a href="http://www.unicode.org/reports/tr39/">TR 39</a>.  

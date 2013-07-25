@@ -18,15 +18,24 @@ The Unicode Standard provides a unique number for every character, enabling disp
 * [Security Testing Focus Areas](#testing)
 
 ## <a id="history"></a>Brief History of Character Encodings
-Early in computing history, it became widely clear that a standardized way to represent characters would provide many benefits. Around 1963, IBM standardized EBCDIC in its mainframes, about the same time that ASCII was standardized as a 7-bit character set.  EBCDIC used an 8-bit encoding, and the unused eighth-bit in ASCII allowed OEM's to apply the extra bit for their proprietary purposes. 
+Early in computing history, it became widely clear that a standardized way to represent characters would provide many benefits. Around 1963, IBM standardized EBCDIC in its mainframes, about the same time that ASCII was standardized as a 7-bit character set.  EBCDIC used an 8-bit encoding, and the unused eighth-bit in ASCII allowed OEM's to apply the extra bit for their proprietary purposes. The following list roughly captures some of the history leading up to Unicode.
+
+* __1991__ - Unicode
+* __1990__ - ISO 10646 (UCS)
+* __1985__ - ISO-8859-1 (code pages galore!)
+* __1981__ - MBCS (e.g. GB2312)
+* __1964__ - EBCDIC (non-ASCII compatible)
+* __1963__ - ASCII 7-bit (an 8th bit free-for-all soon followed)
 
 This allowed OEM's to ship computers and later PC's with customized character encodings specific to language or region. So computers could ship to Israel with a tweaked ASCII encoding set that supported Hebrew for example. The divergence in these customized character sets grew into a problem over time, as data interchange become error-prone if not impossible when computers didn't share the same character set. 
 
 In response to this growth, the International Organization for Standardization (ISO) began developing the ISO-8859 set of character encoding standards in the early 1980's. The ISO-8859 standards were aimed at providing a reliable system for data-interchange across computing systems. They provided support for many popular languages, but weren't designed for high-quality typography which needed symbols such as ligatures. 
 
-In the late 1980's Unicode was being designed, around the same time ISO recognized the need for a single character encoding framework, what would later come to be called the Universal Character Set (UCS), or ISO 10646. Version 1.0 of the Unicode standard was released in 1991 at almost the same time as UCS was made public. Since that time, Unicode has become the de facto character encoding model, and has worked closely with ISO and UCS to ensure compatibility and similar goals.
+In the late 1980's Unicode was being designed, around the same time ISO recognized the need for a ubiquitous character encoding framework, what would later come to be called the Universal Character Set (UCS), or ISO 10646. Version 1.0 of the Unicode standard was released in 1991 at almost the same time as UCS was made public. Since that time, Unicode has become the de facto character encoding model, and has worked closely with ISO and UCS to ensure compatibility and similar goals.
 
 ## <a id="intro"></a>Brief Introduction to Unicode
+Most people are familiar with [ASCII](http://en.wikipedia.org/wiki/ASCII), it's usefulness and it's limitation to 128 characters.  Unicode and UCS expanded the available array of characters by separating the concepts of __code points__ and binary __encodings__.
+
 The Unicode framework can presumably represent all of the worlds languages and scripts, past, present, and future. That's because the current version 5.1 of the Unicode Standard has space for over 1 million code points. A code point is a unique value within the Unicode code-space. A single code point can represent a letter, a special control character (e.g. carriage return), a symbol, or even some other abstract thing.
 
 ### <a id="cp"></a>Code Points 
