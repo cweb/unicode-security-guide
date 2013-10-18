@@ -17,6 +17,10 @@ The content here has been sourced through testing, research, and the following t
 Beyond these two sources, further research has been ongoing around identifying and inventorying software behaviors.  Test cases are being provided in the <a href="https://github.com/websec/unicode-security-guide">source code repository</a>.
 
 ## Contributions and Acknowledgements
+Thank you to the following security-minded practitioners for their valuable feedback:
+
+Bil Corry
+Abraham Kang
 
 ## Disclaimers
 This guide has been written by application security professionals, and has not endorsed or reviewed by the Unicode Consortium.  It does draw on material from the Consortium, with references, where applicable.
