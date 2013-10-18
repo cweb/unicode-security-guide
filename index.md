@@ -20,6 +20,7 @@ Beyond these two sources, further research has been ongoing around identifying a
 Thank you to the following security-minded practitioners for their valuable feedback:
 
 Bil Corry
+
 Abraham Kang
 
 ## Disclaimers
