@@ -94,7 +94,7 @@ Combining marks can be stacked or re-ordered in a myriad of ways.  Consider the 
 </table>
 
 __Bidi and syntax spoofing__
-
+Another interesting vector uses the 'bidirectional' properties of certain characters, also known as 'bidi'.  
 
 ## <a id="attack"></a>Attack Scenarios 
 
