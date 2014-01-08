@@ -17,11 +17,23 @@ The content here has been sourced through testing, research, and the following t
 Beyond these two sources, further research has been ongoing around identifying and inventorying software behaviors.  Test cases are being provided in the <a href="https://github.com/websec/unicode-security-guide">source code repository</a>.
 
 ## Contributions and Acknowledgements
-Thank you to the following security-minded practitioners for their valuable feedback:
+Thank you to the following security-minded practitioners for their valuable feedback on this document:
 
-Bil Corry
-
+[Bil Corry](https://twitter.com/bilcorry)
 Abraham Kang
+
+And the following for their research and documentation into the issues:
+
+<a href="http://www.unicode.org">Unicode Consortium</a>
+<a href="http://www.macchiato.com/">Mark Davis</a>
+[Andy Heninger](https://plus.google.com/117524124943387916918)
+[Richard Ishida](http://rishida.net/)
+[Michael Kaplan](https://twitter.com/michkap)
+[Shawn Steele](http://blogs.msdn.com/b/shawnste/)
+<a href="https://twitter.com/hasegawayosuke">Yosuke HASEGAWA</a>
+<a href="http://eaea.sirdarckcat.net/home.html">Eduardo Vela</a>
+<a href="https://twitter.com/thornmaker">David Lindsay</a>
+[Gareth Heyes](http://www.thespanner.co.uk/)
 
 ## Disclaimers
 This guide has been written by application security professionals, and has not endorsed or reviewed by the Unicode Consortium.  It does draw on material from the Consortium, with references, where applicable.
