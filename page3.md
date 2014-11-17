@@ -452,6 +452,13 @@ The following table of common library API's lists known behaviors:
   <td></td>
   <td></td>
  </tr>
+ <tr>
+  <td>JavaScript</td>
+  <td>String.prototype.normalize()</td>
+  <td>NFC</td>
+  <td>Yes</td>
+  <td><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize">MDN</a></td>
+ </tr>
 </tbody></table>
 
 ### <a id="normalization-browsers"></a>Normalization in Web Browser URLs
