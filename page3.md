@@ -600,7 +600,7 @@ The following table lists test cases to run from a black-box, external perspecti
 TODO If you've determined that input is being normalized but need different characters to exploit the logic, you may use the accompanying test case database.
 
 ## <a id="canonicalization"></a>Canonicalization of Non-Shortest Form UTF-8
-The UTF-8 encoding algorithm allows for a single code point to be represented in multiple ways. That is, while the Latin letter 'A' is normally represented using the byte 0x22 in UTF-8, it's non-shortest form, or overlong, encoding would be any of the following:
+The UTF-8 encoding algorithm allows for a single code point to be represented in multiple ways. That is, while the Latin letter 'A' is normally represented using the byte 0x41 in UTF-8, it's non-shortest form, or overlong, encoding would be any of the following:
 
 * 0xC1 0x81
 * 0xE0 0x81 0x81
