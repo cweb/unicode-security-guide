@@ -1,4 +1,4 @@
 url: http://cweb.github.io/unicode-security-guide
 baseurl: /unicode-security-guide
 author: "Chris Weber"
-markdown: rdiscount
+markdown: kramdown

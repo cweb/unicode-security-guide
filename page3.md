@@ -353,7 +353,7 @@ maintains a list of its <a href="http://site.icu-project.org/charts/charset">cha
 Data may be transcoded directly from a source charset to a destination charset, however it's also common to use Unicode as the broker. In the latter case the software will first transcode the source charset to Unicode, and from there to the destination charset. Some vendors such as Microsoft are known to leverage the Private Use Area (PUA) when transcoding to Unicode, when a direct mapping cannot be found or when a source byte sequence is invalid or illegal. It's important to be aware of a few pitfalls during the transcoding process.
 
 * When data is transcoded to the PUA, converting it again from the PUA may have unexpected consequences.
-* Data can change length, particularly if transcoding to/from a single-byte charset leads to a mult-byte character in the other charset. 
+* Data can change length, particularly if transcoding to/from a single-byte charset leads to a multi-byte character in the other charset. 
 
 As a software engineer building a mechanism for transcoding data between charsets, it's important to understand these pitfalls and handle these unexpected cases gracefully.
 

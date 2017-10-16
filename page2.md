@@ -113,7 +113,7 @@ Finally, characters that appear to be syntactic elements, such as <span class="u
 
 <img class="center" src="{{ site.url }}/img/spoof-slash.png" />
 
-### <a id="vanity"></a>Fradulent Vanity URL's
+### <a id="vanity"></a>Fraudulent Vanity URL's
 
 A social networking service wants to allow vanity URL’s to be registered using international characters such as <span class="uchar">www.foo.bar/&#x0444;&#x0443;</span> but perceives too great a risk from the variety of ways that the URL could be subject to visual fraud and confusion. Because Unicode characters are well-supported in the path portion of a browser’s URL display, a well-crafted vanity URL could easily fool victims and be the landing page for a phishing attack.  In fact, it's often unnecessary to use Unicode - in some cases, the number one "1" can appear as the letter "l", and in certain fonts the sequence "rn" can appear as the letter "m".
 
@@ -139,11 +139,11 @@ In another example, the <span class="uchar">U+FEFF ZERO WIDTH NO-BREAK SPACE</sp
 
 <img class="center" src="{{ site.url }}/img/spoof-win-explorer-folder.png" />
 
-Invisible characters present their own interesting dymanics and applications.  As seen in the image above, Windows Explorer presents what appears to be two folders with identical names, whereas a default command prompt does not properly display the BOM, and so presents it as an empty box.
+Invisible characters present their own interesting dynamics and applications.  As seen in the image above, Windows Explorer presents what appears to be two folders with identical names, whereas a default command prompt does not properly display the BOM, and so presents it as an empty box.
 
 ### <a id="ads"></a>Malvertisements
 
-Advertising network's often need to protect brand name trademarks from being registered or used by anyone other than their owner. This threat might be mitigated through filters, human editorial inspection, or a combination of the two.  An attacker could place an malicious phishing ad that bypasses trademark filters by using confusable characters. For example “Download Microsoft Windows 8 Service Pack 1 here” where the trademarked name 'Microsoft Windows' was crafted using non-English script, or even using invisibile characters.
+Advertising network's often need to protect brand name trademarks from being registered or used by anyone other than their owner. This threat might be mitigated through filters, human editorial inspection, or a combination of the two.  An attacker could place an malicious phishing ad that bypasses trademark filters by using confusable characters. For example “Download Microsoft Windows 8 Service Pack 1 here” where the trademarked name 'Microsoft Windows' was crafted using non-English script, or even using invisible characters.
 
 ### <a id="email"></a>Forging Internationalized Email
 
