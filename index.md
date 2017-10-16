@@ -11,8 +11,8 @@ The dynamics of Unicode, and character encodings in general, are often misunders
 
 The content here has been sourced through testing, research, and the following two technical reports from the Unicode Consortium:
 
-* [Technical Report #36 : Unicode Security Considerations](http://www.unicode.org/reports/tr36/)
-* [Technical Report #39 : Unicode Security Mechanisms](http://www.unicode.org/reports/tr39/)
+* [Technical Report #36 : Unicode Security Considerations](https://www.unicode.org/reports/tr36/)
+* [Technical Report #39 : Unicode Security Mechanisms](https://www.unicode.org/reports/tr39/)
 
 Beyond these two sources, further research has been ongoing around identifying and inventorying software behaviors.  Test cases are being provided in the <a href="https://github.com/websec/unicode-security-guide">source code repository</a>.
 
@@ -24,7 +24,7 @@ Thank you to the following security-minded practitioners for their valuable feed
 
 And the following for their research and documentation into the issues:
 
-* <a href="http://www.unicode.org">Unicode Consortium</a>
+* <a href="https://www.unicode.org">Unicode Consortium</a>
 * <a href="http://www.macchiato.com/">Mark Davis</a>
 * [Andy Heninger](https://plus.google.com/117524124943387916918)
 * [Richard Ishida](http://rishida.net/)

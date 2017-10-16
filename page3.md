@@ -340,7 +340,7 @@ The following table lists test cases to run from a black-box, external perspecti
  </tr>
 </tbody></table>
 
-These test cases are largely derived from the <a href="http://unicode.org/Public/MAPPINGS/VENDORS/">public best-fit mappings provided by the Unicode Consortium</a>. These are provided to software vendors but do not necessarily they were implemented as documented. In fact, any
+These test cases are largely derived from the <a href="https://unicode.org/Public/MAPPINGS/VENDORS/">public best-fit mappings provided by the Unicode Consortium</a>. These are provided to software vendors but do not necessarily they were implemented as documented. In fact, any
 software vendor such as Microsoft, IBM, Oracle, can implement these mappings as they desire. 
 
 ## <a id="transcoding"></a>Charset Transcoding and Character Mappings
@@ -365,7 +365,7 @@ Software vulnerabilities can arise through charset transcodings. To name a few:
 
 ## <a id="normalization"></a>Normalization
 
-In Unicode, Normalization of characters and strings follows a specification defined in the <a href="http://unicode.org/reports/tr15/">Unicode Standard Annex #15: Unicode Normalization Forms</a>.  The details of Normalization are not for the faint of heart and will not be discussed in this guide. For engineers and testers, it's at least important to understand that there are four
+In Unicode, Normalization of characters and strings follows a specification defined in the <a href="https://unicode.org/reports/tr15/">Unicode Standard Annex #15: Unicode Normalization Forms</a>.  The details of Normalization are not for the faint of heart and will not be discussed in this guide. For engineers and testers, it's at least important to understand that there are four
 Normalization forms defined: 
 
 * NFC - Canonical Decomposition
@@ -615,7 +615,7 @@ Given the history of security vulnerabilities around overlong UTF-8, many framew
 
 > Process B accepts the byte sequence from process A, and transforms it into UTF-16 while interpreting non-shortest forms.
 
-> The UTF-16 text may then contain characters that should have been filtered out by process A. [source](http://unicode.org/versions/corrigendum1.html)
+> The UTF-16 text may then contain characters that should have been filtered out by process A. [source](https://unicode.org/versions/corrigendum1.html)
 
 The overlong form of UTF-8 byte sequences is currently considered an illegal byte sequence. It's therefore a good test case to attempt in software such as Web applications, browsers, and databases.
 
@@ -623,7 +623,7 @@ Some notes about canonicalization and UTF-8 encoded data.
 
 * The ASCII range (0x00 to 0x7F) is preserved in UTF-8.
 * UTF-8 can encode any Unicode character U+000000 through U+10FFFF using any number of bytes, thus leading to the non-shortest form problem.
-* The Unicode standard (3.0 and later) requires that a code point be serializd in UTF-8 using a byte sequence of one to four bytes in length. [The Corrigendum #1: UTF-8 Shortest](http://unicode.org/versions/corrigendum1.html) Form introduced this conformance requirement.
+* The Unicode standard (3.0 and later) requires that a code point be serializd in UTF-8 using a byte sequence of one to four bytes in length. [The Corrigendum #1: UTF-8 Shortest](https://unicode.org/versions/corrigendum1.html) Form introduced this conformance requirement.
 
 __Non-shortest form UTF-8__ has been the vector for critical vulnerabilities in the past. From the [Microsoft IIS 4.0 and 5.0 directory traversal vulnerability](http://www.microsoft.com/technet/security/bulletin/MS00-078.mspx) of 2000, which was rediscovered in the product's [WebDAV component in 2009](http://blog.zoller.lu/2009/05/iis-6-webdac-auth-bypass-and-data.html).
 
@@ -892,7 +892,7 @@ Taken apart, there are three minimally well-formed subsequences &lt;41&gt;, &lt;
   <td>F4</td>
   <td>80..BF</td>
   <td>80..BF</td>
-  <td>80..BF<a href="http://unicode.org/versions/Unicode5.0.0/ch03.pdf"><sup>source</sup></a></td>
+  <td>80..BF<a href="https://unicode.org/versions/Unicode5.0.0/ch03.pdf"><sup>source</sup></a></td>
  </tr>
 </tbody></table>
 
@@ -1198,7 +1198,7 @@ The following table from UTR 36 illustrates the maximum expansion factors for ca
  </tr>
 </tbody></table>
 
-<sup>[source:  Unicode Technical Report #36](http://www.unicode.org/reports/tr36/)</sup>
+<sup>[source:  Unicode Technical Report #36](https://www.unicode.org/reports/tr36/)</sup>
 
 ### <a id="overflow-normalization"></a>Normalization
 
@@ -1251,7 +1251,7 @@ The following table from UTR 36 illustrates the maximum expansion factors for no
   <td>18X</td>
  </tr>
 </tbody></table>
-<sup>[source:  Unicode Technical Report #36](http://www.unicode.org/reports/tr36/)</sup>
+<sup>[source:  Unicode Technical Report #36](https://www.unicode.org/reports/tr36/)</sup>
 
 
 

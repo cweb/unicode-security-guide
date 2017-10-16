@@ -24,7 +24,7 @@ To a computer system however, each of these letters has very different meaning. 
 ## <a id="prior"></a>Prior Research
 One of the most well-known attacks to exploit visual spoofing was the Paypal.com IDN spoof of 2005. Setup to demonstrate the power of these attack vectors, [Eric Johanson](http://www.shmoo.com/idn/) and The Schmoo Group successfully used a [www.paypal.com](http://www.paypal.com) lookalike domain name to fool visitors into providing personal information. The advisory references original research from 2002 by [Evgeniy Gabrilovich and Alex Gontmakher](http://www.cs.technion.ac.il/~gabr/papers/homograph.html) at the Israel Institute of Technology. Their original paper described an attack using Microsoft.com as an example.
 
-Viktor Krammer, author of the [Quero Toolbar](http://www.quero.at/) for Internet Explorer, also presented additional research on these attack vectors and detection mechanisms in his [2006 presentation](http://www.quero.at/papers/idn_spoofing.pdf).  Additionally, the [Unicode Consortium](http://unicode.org) has been active at raising awareness of these issues in its security papers, and in providing recommended solutions.
+Viktor Krammer, author of the [Quero Toolbar](http://www.quero.at/) for Internet Explorer, also presented additional research on these attack vectors and detection mechanisms in his [2006 presentation](http://www.quero.at/papers/idn_spoofing.pdf).  Additionally, the [Unicode Consortium](https://unicode.org) has been active at raising awareness of these issues in its security papers, and in providing recommended solutions.
 
 ## <a id="vectors"></a>Summary of Vectors
 The phenomena of 'visual spoofing' may be malicious and deliberate or benign and accidental.  There have been cases where a choice of font displayed a sequence of characters in an unintended way, just as there have been cases where Unicode characters did not display properly.  The following list attempts to capture the major vectors:
@@ -153,11 +153,11 @@ Email addresses and the SMTP protocol has long been confined to ASCII, however, 
 All does not seem lost.  While
 
 ## <a id="confusables"></a>The Confusables
-Throughout Unicode, the characters that visually resemble one another are referred to as <strong>the confusables</strong>.  The Unicode Consortium has documented this phenomena in both <a href="http://www.unicode.org/reports/tr36/">Technical Report 36</a> and <a href="http://www.unicode.org/reports/tr39/">TR 39</a>.  
+Throughout Unicode, the characters that visually resemble one another are referred to as <strong>the confusables</strong>.  The Unicode Consortium has documented this phenomena in both <a href="https://www.unicode.org/reports/tr36/">Technical Report 36</a> and <a href="https://www.unicode.org/reports/tr39/">TR 39</a>.  
 
-It is TR 39 specifically which provides links to the data files comprising the confusables, such as <a href="http://www.unicode.org/Public/security/revision-05/confusables.txt">confusables.txt</a> which provides a mapping for visual confusables.
+It is TR 39 specifically which provides links to the data files comprising the confusables, such as <a href="https://www.unicode.org/Public/security/revision-05/confusables.txt">confusables.txt</a> which provides a mapping for visual confusables.
 
-The Unicode Consortium has also provided <a href="http://unicode.org/cldr/utility/confusables.jsp">Unicode Utilities: Confusables</a> which takes an input string and produces visually confusable strings generated using the prior mentioned data files.
+The Unicode Consortium has also provided <a href="https://unicode.org/cldr/utility/confusables.jsp">Unicode Utilities: Confusables</a> which takes an input string and produces visually confusable strings generated using the prior mentioned data files.
 
 ### <a id="single"></a>Single-Script Confusables
 
