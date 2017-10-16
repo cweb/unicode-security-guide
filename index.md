@@ -14,7 +14,7 @@ The content here has been sourced through testing, research, and the following t
 * [Technical Report #36 : Unicode Security Considerations](https://www.unicode.org/reports/tr36/)
 * [Technical Report #39 : Unicode Security Mechanisms](https://www.unicode.org/reports/tr39/)
 
-Beyond these two sources, further research has been ongoing around identifying and inventorying software behaviors.  Test cases are being provided in the <a href="https://github.com/websec/unicode-security-guide">source code repository</a>.
+Beyond these two sources, further research has been ongoing around identifying and inventorying software behaviors.  Test cases are being provided in the <a href="https://github.com/cweb/unicode-security-guide">source code repository</a>.
 
 ## Contributions and Acknowledgements
 Thank you to the following security-minded practitioners for their valuable feedback on this document:
