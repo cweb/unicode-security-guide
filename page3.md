@@ -33,17 +33,17 @@ As an example, consider an attacker trying to inject script (i.e. cross-site scr
 
 
 ## <a id="round-trip"></a>Round-trip Conversions: A Common Pattern
-In practice, Globalized software must be capable of handling many different character sets, and converting data between them. The process for supporting this requirement can generally look like the following:
+In practice, globalized software must be capable of handling many different character sets, and converting data between them. The process for supporting this requirement can generally look like the following:
 
 1. Accept data from any character set, e.g. Unicode, shift_jis, ISO-8859-1.
 2. Transform, or convert, data to Unicode for processing and storage.
 3. Transform data to original or other character set for output and display.
 
-In this pattern, Unicode is used as the broker. With support for such a large character repetoire, Unicode will often have a character mapping for both sides of this transaction. To illustrate this, consider the following Web application transaction.
+In this pattern, Unicode is used as the broker. With support for such a large character repertoire, Unicode will often have a character mapping for both sides of this transaction. To illustrate this, consider the following Web application transaction.
 
 1. An application end-user inputs their full name using characters encoded from the shift_jis character set.
 2. Before storing in the database, the application converts the user-input to Unicode's UTF-8 format.
-3. When visiting the Web page, the user's full name will be returned in UTF-8 format, unless other conditions cause the data to be returned in a different encoding encoding. Such conditions may be based on the Web application's configuration or the user's Web browser language and encoding settings. Under these types of conditions, the Web application will convert the data to the requested encoding.
+3. When visiting the Web page, the user's full name will be returned in UTF-8 format, unless other conditions cause the data to be returned in a different encoding. Such conditions may be based on the Web application's configuration or the user's Web browser language and encoding settings. Under these types of conditions, the Web application will convert the data to the requested encoding.
 
 The round-trip conversions illustrated here can lead to numerous issues that will be further discussed. While it serves as a good example, this isn't the only case where such issues can arise.
 
@@ -70,7 +70,7 @@ For example, consider a Web-application that’s implemented a filter to prevent
 4. After passing through the XSS filter unchanged, the input moves deeper into the application.
 5. Another API, perhaps at the data access layer, is configured to use a different character set such as windows-1252. 
 6. On receiving the input, a data access layer converts the multi-byte UTF-8 text to the single-byte windows-1252 code page, forcing a best-fit conversion to the dangerous characters the original XSS filter was trying to block.
-7.The attacker’s input successfully persists to the database.
+7. The attacker’s input successfully persists to the database.
 
 [Shawn Steele](http://blogs.msdn.com/shawnste/archive/2006/01/19/515047.aspx) describes the security issues well on his blog, it's a highly recommended short read for the level of coverage he provides regarding Microsoft's API's:
 
@@ -340,7 +340,7 @@ The following table lists test cases to run from a black-box, external perspecti
  </tr>
 </tbody></table>
 
-These test cases are largely derived from the <a href="http://unicode.org/Public/MAPPINGS/VENDORS/">public best-fit mappings provided by the Unicode Consortium</a>. These are provided to software vendors but do not necessarily they were implemented as documented. In fact, any
+These test cases are largely derived from the <a href="https://unicode.org/Public/MAPPINGS/VENDORS/">public best-fit mappings provided by the Unicode Consortium</a>. These are provided to software vendors but do not necessarily they were implemented as documented. In fact, any
 software vendor such as Microsoft, IBM, Oracle, can implement these mappings as they desire. 
 
 ## <a id="transcoding"></a>Charset Transcoding and Character Mappings
@@ -353,7 +353,7 @@ maintains a list of its <a href="http://site.icu-project.org/charts/charset">cha
 Data may be transcoded directly from a source charset to a destination charset, however it's also common to use Unicode as the broker. In the latter case the software will first transcode the source charset to Unicode, and from there to the destination charset. Some vendors such as Microsoft are known to leverage the Private Use Area (PUA) when transcoding to Unicode, when a direct mapping cannot be found or when a source byte sequence is invalid or illegal. It's important to be aware of a few pitfalls during the transcoding process.
 
 * When data is transcoded to the PUA, converting it again from the PUA may have unexpected consequences.
-* Data can change length, particularly if transcoding to/from a single-byte charset leads to a mult-byte character in the other charset. 
+* Data can change length, particularly if transcoding to/from a single-byte charset leads to a multi-byte character in the other charset. 
 
 As a software engineer building a mechanism for transcoding data between charsets, it's important to understand these pitfalls and handle these unexpected cases gracefully.
 
@@ -365,7 +365,7 @@ Software vulnerabilities can arise through charset transcodings. To name a few:
 
 ## <a id="normalization"></a>Normalization
 
-In Unicode, Normalization of characters and strings follows a specification defined in the <a href="http://unicode.org/reports/tr15/">Unicode Standard Annex #15: Unicode Normalization Forms</a>.  The details of Normalization are not for the faint of heart and will not be discussed in this guide. For engineers and testers, it's at least important to understand that there are four
+In Unicode, Normalization of characters and strings follows a specification defined in the <a href="https://unicode.org/reports/tr15/">Unicode Standard Annex #15: Unicode Normalization Forms</a>.  The details of Normalization are not for the faint of heart and will not be discussed in this guide. For engineers and testers, it's at least important to understand that there are four
 Normalization forms defined: 
 
 * NFC - Canonical Decomposition
@@ -615,7 +615,7 @@ Given the history of security vulnerabilities around overlong UTF-8, many framew
 
 > Process B accepts the byte sequence from process A, and transforms it into UTF-16 while interpreting non-shortest forms.
 
-> The UTF-16 text may then contain characters that should have been filtered out by process A. [source](http://unicode.org/versions/corrigendum1.html)
+> The UTF-16 text may then contain characters that should have been filtered out by process A. [source](https://unicode.org/versions/corrigendum1.html)
 
 The overlong form of UTF-8 byte sequences is currently considered an illegal byte sequence. It's therefore a good test case to attempt in software such as Web applications, browsers, and databases.
 
@@ -623,7 +623,7 @@ Some notes about canonicalization and UTF-8 encoded data.
 
 * The ASCII range (0x00 to 0x7F) is preserved in UTF-8.
 * UTF-8 can encode any Unicode character U+000000 through U+10FFFF using any number of bytes, thus leading to the non-shortest form problem.
-* The Unicode standard (3.0 and later) requires that a code point be serializd in UTF-8 using a byte sequence of one to four bytes in length. [The Corrigendum #1: UTF-8 Shortest](http://unicode.org/versions/corrigendum1.html) Form introduced this conformance requirement.
+* The Unicode standard (3.0 and later) requires that a code point be serializd in UTF-8 using a byte sequence of one to four bytes in length. [The Corrigendum #1: UTF-8 Shortest](https://unicode.org/versions/corrigendum1.html) Form introduced this conformance requirement.
 
 __Non-shortest form UTF-8__ has been the vector for critical vulnerabilities in the past. From the [Microsoft IIS 4.0 and 5.0 directory traversal vulnerability](http://www.microsoft.com/technet/security/bulletin/MS00-078.mspx) of 2000, which was rediscovered in the product's [WebDAV component in 2009](http://blog.zoller.lu/2009/05/iis-6-webdac-auth-bypass-and-data.html).
 
@@ -892,7 +892,7 @@ Taken apart, there are three minimally well-formed subsequences &lt;41&gt;, &lt;
   <td>F4</td>
   <td>80..BF</td>
   <td>80..BF</td>
-  <td>80..BF<a href="http://unicode.org/versions/Unicode5.0.0/ch03.pdf"><sup>source</sup></a></td>
+  <td>80..BF<a href="https://unicode.org/versions/Unicode5.0.0/ch03.pdf"><sup>source</sup></a></td>
  </tr>
 </tbody></table>
 
@@ -1198,7 +1198,7 @@ The following table from UTR 36 illustrates the maximum expansion factors for ca
  </tr>
 </tbody></table>
 
-<sup>[source:  Unicode Technical Report #36](http://www.unicode.org/reports/tr36/)</sup>
+<sup>[source:  Unicode Technical Report #36](https://www.unicode.org/reports/tr36/)</sup>
 
 ### <a id="overflow-normalization"></a>Normalization
 
@@ -1251,7 +1251,7 @@ The following table from UTR 36 illustrates the maximum expansion factors for no
   <td>18X</td>
  </tr>
 </tbody></table>
-<sup>[source:  Unicode Technical Report #36](http://www.unicode.org/reports/tr36/)</sup>
+<sup>[source:  Unicode Technical Report #36](https://www.unicode.org/reports/tr36/)</sup>
 
 
 

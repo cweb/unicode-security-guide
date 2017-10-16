@@ -172,7 +172,7 @@ Surrogate pairs combine two pairs in the reserved code point range U+D800 to U+D
 
 An alternative to encoding characters is representing them using a symbolic representation rather than a serialization of bytes.  This is common in HTTP with URL-encoded data, and in HTML.   In HTML, numerical character references (NCR) can be used in either a decimal or hexadecimal form that maps to a Unicode code point. 
 
-In fact, CSS (Cascading Style Sheets) and even Javascript use escape sequences, as do most programming languages.  The details of each protocol’s specification are outside the scope of this document, however examples will be used here for reference.
+In fact, CSS (Cascading Style Sheets) and even JavaScript use escape sequences, as do most programming languages.  The details of each protocol’s specification are outside the scope of this document, however examples will be used here for reference.
 
 The following table lists the common escape sequences for <span class="uchar">U+0041 LATIN CAPITAL LETTER A</span>.
 
@@ -200,7 +200,7 @@ The following table lists the common escape sequences for <span class="uchar">U+
   <td>\41 and \0041</td>
  </tr>
  <tr>
-  <td>Javascript</td>
+  <td>JavaScript</td>
   <td>\x41 and \u0041</td>
  </tr>
  <tr>
@@ -235,11 +235,11 @@ The following table gives another example, using <span class="uchar">U+FEFF ZERO
   <td>&nbsp;\FEFF</td>
  </tr>
  <tr>
-  <td>Javascript (as bytes)</td>
+  <td>JavaScript (as bytes)</td>
   <td>\xEF\xBB\xBF</td>
  </tr>
  <tr>
-  <td>Javascript (as reference)</td>
+  <td>JavaScript (as reference)</td>
   <td>\uFEFF</td>
  </tr>
  <tr>
