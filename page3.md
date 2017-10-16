@@ -33,17 +33,17 @@ As an example, consider an attacker trying to inject script (i.e. cross-site scr
 
 
 ## <a id="round-trip"></a>Round-trip Conversions: A Common Pattern
-In practice, Globalized software must be capable of handling many different character sets, and converting data between them. The process for supporting this requirement can generally look like the following:
+In practice, globalized software must be capable of handling many different character sets, and converting data between them. The process for supporting this requirement can generally look like the following:
 
 1. Accept data from any character set, e.g. Unicode, shift_jis, ISO-8859-1.
 2. Transform, or convert, data to Unicode for processing and storage.
 3. Transform data to original or other character set for output and display.
 
-In this pattern, Unicode is used as the broker. With support for such a large character repetoire, Unicode will often have a character mapping for both sides of this transaction. To illustrate this, consider the following Web application transaction.
+In this pattern, Unicode is used as the broker. With support for such a large character repertoire, Unicode will often have a character mapping for both sides of this transaction. To illustrate this, consider the following Web application transaction.
 
 1. An application end-user inputs their full name using characters encoded from the shift_jis character set.
 2. Before storing in the database, the application converts the user-input to Unicode's UTF-8 format.
-3. When visiting the Web page, the user's full name will be returned in UTF-8 format, unless other conditions cause the data to be returned in a different encoding encoding. Such conditions may be based on the Web application's configuration or the user's Web browser language and encoding settings. Under these types of conditions, the Web application will convert the data to the requested encoding.
+3. When visiting the Web page, the user's full name will be returned in UTF-8 format, unless other conditions cause the data to be returned in a different encoding. Such conditions may be based on the Web application's configuration or the user's Web browser language and encoding settings. Under these types of conditions, the Web application will convert the data to the requested encoding.
 
 The round-trip conversions illustrated here can lead to numerous issues that will be further discussed. While it serves as a good example, this isn't the only case where such issues can arise.
 
@@ -70,7 +70,7 @@ For example, consider a Web-application that’s implemented a filter to prevent
 4. After passing through the XSS filter unchanged, the input moves deeper into the application.
 5. Another API, perhaps at the data access layer, is configured to use a different character set such as windows-1252. 
 6. On receiving the input, a data access layer converts the multi-byte UTF-8 text to the single-byte windows-1252 code page, forcing a best-fit conversion to the dangerous characters the original XSS filter was trying to block.
-7.The attacker’s input successfully persists to the database.
+7. The attacker’s input successfully persists to the database.
 
 [Shawn Steele](http://blogs.msdn.com/shawnste/archive/2006/01/19/515047.aspx) describes the security issues well on his blog, it's a highly recommended short read for the level of coverage he provides regarding Microsoft's API's:
 
